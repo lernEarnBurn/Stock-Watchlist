@@ -17,7 +17,6 @@ export default async function Login(){
 
 
   //now that im gonna use route handlers like so need to see 2 things
-  //1 how to set up mongoDb if not ill do pocket base
   //2 how to do passport or best user auth with next js
   return (
     <>
