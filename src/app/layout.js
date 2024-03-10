@@ -1,9 +1,16 @@
 import './global.css'
 import { TrendingUp } from 'lucide-react';
 
+export const metadata = {
+  title: 'Watchlists'
+}
+
 export default function RootLayout({children}) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/images/bar-chart-4.svg" />
+      </head>
       <body>
         <div className="bg-black w-full h-[15vh] flex items-center justify-center gap-14">
           {[1, 2, 3, 4].map((num) => (
