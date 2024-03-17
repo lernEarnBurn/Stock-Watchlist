@@ -1,28 +1,30 @@
-async function getData() {
-  const res = await fetch('/api/poop')
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
- 
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data')
-  }
- 
-  return res.json()
-}
+'use client'
 
-export default async function Login(){
-  const data = await fetch('http://localhost:3000/api/poop')
-  const jsonData = await data.json();
+import { motion } from 'framer-motion'
 
+
+export default function Login(){
+  const buttonVariants = {
+    rest: { scale: 1 },
+    hover: { scale: 1.02 },
+  };
 
   //now that im gonna use route handlers like so need to see 2 things
   //2 how to do passport or best user auth with next js
   return (
     <>
-    {jsonData.users && jsonData.users.map((user, index) => (
-      <p key={user.id || index}>{user.name}</p>
-    ))}
-  </>
+      <div className="flex flex-col gap-5 justify-center items-center h-[80vh]">
+        <input type="text" placeholder="username"/>
+        <input type="password" placeholder="password"/>
+        <motion.button
+          className="mt-2"
+          variants={buttonVariants}
+          whileHover="hover"
+          whileTap="rest"
+          initial="rest"
+         >Submit
+        </motion.button>
+      </div>
+    </>
   )
 }
