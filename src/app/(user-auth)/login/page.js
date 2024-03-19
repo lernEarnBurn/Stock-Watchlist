@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link';
 
 
 export default function Login(){
@@ -24,6 +25,7 @@ export default function Login(){
           initial="rest"
          >Submit
         </motion.button>
+        <Link className='self-end underline text-sm' href="/signup">Create Account</Link>
       </div>
     </>
   )
