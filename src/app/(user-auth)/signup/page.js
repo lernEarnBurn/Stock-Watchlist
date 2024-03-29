@@ -1,9 +1,8 @@
 'use client'
 
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion'
 import Link from 'next/link';
-import { useState } from 'react';
-import axios from 'axios';
 
 
 export default function Signup(){
@@ -12,49 +11,49 @@ export default function Signup(){
     hover: { scale: 1.02 },
   };
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const router = useRouter()
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value)
-  }
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value)
-  }
+  async function handleSubmit(event) {
+    event.preventDefault()
+ 
+    const formData = new FormData(event.currentTarget)
+    const username = formData.get('username')
+    const password = formData.get('password')
 
-  async function sendSignup(){
-    if(username !== '' && password !== ''){
-      try{
-        const response = await axios.post('api/auth/signup', {username, password})
-        console.log(response.data)
-        setUsername('')
-        setPassword('')
-      } catch(err){
-        console.log(err)
-      }
+    
+    const response = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+  
+    if (response.ok) {
+      router.push('/dashboard');
+    } else {
+      const errorData = await response.json();
+      console.log('Error:', errorData.error);
     }
   }
 
 
-
   return (
     <>
-      <div className="flex flex-col gap-5 justify-center items-center h-[80vh]">
-        <input onChange={handleUsernameChange} type="text" placeholder="username"/>
-        <input onChange={handlePasswordChange} type="password" placeholder="password"/>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5 justify-center items-center h-[80vh]">
+        <input name="username" type="text" placeholder="username"/>
+        <input name="password" type="password" placeholder="password"/>
         <motion.button
-          className="mt-2"
+          className="mt-2 button"
           variants={buttonVariants}
           whileHover="hover"
           whileTap="rest"
           initial="rest"
-          onClick={sendSignup}
+          type='submit'
          >Submit
         </motion.button>
         <Link className='self-end underline text-sm' href="/login">Already Have Account</Link>
 
-      </div>
+      </form>
     </>
   )
 }
