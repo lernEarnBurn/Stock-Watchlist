@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion'
 import Link from 'next/link';
+import { useState } from 'react';
 
 
 export default function Signup(){
@@ -13,6 +14,7 @@ export default function Signup(){
 
   const router = useRouter()
 
+  const [userExists, setUserExists] = useState(false)
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -27,12 +29,16 @@ export default function Signup(){
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     });
-  
+    console.log(response.data)
     if (response.ok) {
       router.push('/dashboard');
     } else {
       const errorData = await response.json();
       console.log('Error:', errorData.error);
+
+      if(errorData.error === "User already exists"){
+        setUserExists(true)
+      }
     }
   }
 
@@ -42,6 +48,9 @@ export default function Signup(){
       <form onSubmit={handleSubmit} className="flex flex-col gap-5 justify-center items-center h-[80vh]">
         <input name="username" type="text" placeholder="username"/>
         <input name="password" type="password" placeholder="password"/>
+        {userExists && (
+          <p className='text-red-400 text-sm ml-1 my-[-2vh] font-semibold self-start'>User already exists.</p>
+        )}
         <motion.button
           className="mt-2 button"
           variants={buttonVariants}

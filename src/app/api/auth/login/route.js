@@ -14,7 +14,6 @@ export async function POST(req) {
   } catch (error) {
     return new Response(JSON.stringify({ error: 'Invalid credentials' }), {
       status: 401,
-      //handle wrong password message on frontend
     });
   }
 }
