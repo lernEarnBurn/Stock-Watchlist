@@ -29,6 +29,7 @@ export default function Signup(){
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     });
+    
     console.log(response.data)
     if (response.ok) {
       router.push('/dashboard');

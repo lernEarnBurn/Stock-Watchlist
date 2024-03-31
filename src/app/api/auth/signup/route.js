@@ -1,6 +1,8 @@
 import User from "@/utils/models/user";
 import bcrypt from "bcrypt";
 import dbConnect from "@/utils/mongoose";
+import { getIronSession } from 'iron-session';
+import { cookies } from "next/headers";
 
 export async function POST(req, res) {
   try {
@@ -24,9 +26,12 @@ export async function POST(req, res) {
     });
 
     await newUser.save();
-
+   
     //session management
-
+    const session = await getIronSession(cookies(), { password: process.env.COOKIE_PASSWORD, cookieName: 'user' });
+    session.username = username;
+    await session.save();
+    
     return new Response(JSON.stringify({ success: true, user: newUser }), {
       status: 201,
     });

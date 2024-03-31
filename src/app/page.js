@@ -1,18 +1,16 @@
-'use client'
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { getIronSession } from 'iron-session'
+import { cookies } from 'next/headers';
 
-export default function Page() {
-  const router = useRouter();
-  
-  //may need to not use localStorage if using server components
-  useEffect(() => {
-    if (localStorage.getItem('user')) {
-      router.push('/dashboard');
-    } else {
-      router.push('/login');
-    }
-  }, []);
 
-  return null; 
+
+
+export default async function Page() {
+
+  const session = await getIronSession(cookies(), { password: process.env.COOKIE_PASSWORD, cookieName: 'user' });
+  if(session.username){
+    redirect('/dashboard');
+  } else {
+    redirect('/login');
+  }
 }
