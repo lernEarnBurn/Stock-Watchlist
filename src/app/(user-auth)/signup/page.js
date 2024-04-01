@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { Loader2 } from 'lucide-react'
+
 
 export default function Signup(){
   const buttonVariants = {
@@ -15,6 +17,8 @@ export default function Signup(){
   const router = useRouter()
 
   const [userExists, setUserExists] = useState(false)
+  const [loading, setLoading] = useState(false)
+
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -23,14 +27,15 @@ export default function Signup(){
     const username = formData.get('username')
     const password = formData.get('password')
 
-    
+    setLoading(true)    
+
     const response = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     });
     
-    console.log(response.data)
+
     if (response.ok) {
       router.push('/dashboard');
     } else {
@@ -41,6 +46,7 @@ export default function Signup(){
         setUserExists(true)
       }
     }
+    setLoading(false)
   }
 
 
@@ -52,15 +58,19 @@ export default function Signup(){
         {userExists && (
           <p className='text-red-400 text-sm ml-1 my-[-2vh] font-semibold self-start'>User already exists.</p>
         )}
-        <motion.button
-          className="mt-2 button"
-          variants={buttonVariants}
-          whileHover="hover"
-          whileTap="rest"
-          initial="rest"
-          type='submit'
-         >Submit
-        </motion.button>
+        {!loading ? (
+            <motion.button
+              type='submit'
+              className="mt-2 button"
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="rest"
+              initial="rest"
+             >Submit
+            </motion.button>
+          ) : (
+            <button disabled className='mt-2 button place-items-center grid'><Loader2 className='animate-spin'/></button>
+          )}
         <Link className='self-end underline text-sm' href="/login">Already Have Account</Link>
 
       </form>
