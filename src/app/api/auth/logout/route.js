@@ -7,7 +7,7 @@ export async function POST(request) {
     cookieName: 'user',
   });
 
-  await session.destroy();
+  session.destroy();
 
   return new Response(JSON.stringify({ success: true }), {
     status: 200,
