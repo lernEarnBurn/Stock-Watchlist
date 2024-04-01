@@ -21,6 +21,7 @@ export async function signIn(credentials) {
     return {
       id: user._id,
       username: user.username,
+      watchlist: user.watchlist
     };
   } catch (error) {
     throw new Error('Invalid credentials');

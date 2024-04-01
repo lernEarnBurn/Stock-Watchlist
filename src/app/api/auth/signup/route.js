@@ -30,6 +30,7 @@ export async function POST(req, res) {
     //session management
     const session = await getIronSession(cookies(), { password: process.env.COOKIE_PASSWORD, cookieName: 'user' });
     session.username = username;
+    session.watchlist = newUser.watchlist
     await session.save();
     
     return new Response(JSON.stringify({ success: true, user: newUser }), {
