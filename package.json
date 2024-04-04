@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@alpacahq/alpaca-trade-api": "^3.0.1",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "clsx": "^2.1.0",
@@ -20,7 +21,8 @@
     "react": "^18",
     "react-dom": "^18",
     "simplex-noise": "^4.0.1",
-    "tailwind-merge": "^2.2.1"
+    "tailwind-merge": "^2.2.1",
+    "ws": "^7.5.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
