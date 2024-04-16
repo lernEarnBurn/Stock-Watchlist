@@ -38,10 +38,9 @@ body {
 input {
   background-color: black;
   width: 25vw;
-  height: 7vh;
   border: .3vh solid white;
   border-radius: .5vh;
-  padding: .5vh 1vw;
+  padding: 1vh 1vw;
   font-size: large;
 }
 
@@ -49,6 +48,12 @@ input {
   background-color: rgb(80, 225, 251);
   width: 25vw;
   border-radius: .5vh;
-  height: 7vh;
   font-size: larger;
+  padding: 1vh;
+}
+
+.logout-button {
+  background-color: rgb(80, 225, 251);
+  border-radius: .5vh;
+  padding: 1vh 1vh;
 }
